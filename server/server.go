@@ -2,8 +2,7 @@ package main
 
 import (
 	"flag"
-	"sync"
-
+	"fmt"
 	"github.com/ailidani/paxi"
 	"github.com/ailidani/paxi/abd"
 	"github.com/ailidani/paxi/blockchain"
@@ -17,9 +16,11 @@ import (
 	"github.com/ailidani/paxi/paxos"
 	"github.com/ailidani/paxi/paxos_group"
 	"github.com/ailidani/paxi/sdpaxos"
+	"github.com/ailidani/paxi/vanilla_paxos"
 	"github.com/ailidani/paxi/vpaxos"
 	"github.com/ailidani/paxi/wankeeper"
 	"github.com/ailidani/paxi/wpaxos"
+	"sync"
 )
 
 var algorithm = flag.String("algorithm", "paxos", "Distributed algorithm")
@@ -78,6 +79,10 @@ func replica(id paxi.ID) {
 
 	case "hpaxos":
 		hpaxos.NewReplica(id).Run()
+
+	case "vanilla_paxos":
+		fmt.Println("vanilla paxos server started")
+		vanilla_paxos.NewReplica(id).Run()
 
 	default:
 		panic("Unknown algorithm")
